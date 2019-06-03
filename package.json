@@ -1,0 +1,20 @@
+{
+  "name": "sipgateio-sendfax-node",
+  "version": "1.0.0",
+  "description": "A demonstration on how to send a fax using the sipgate REST API.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "sipgate.io",
+  "repository": "https://github.com/sipgate-io/sipgateio-sendfax-node",
+  "engines": {
+    "node": "10.15.3"
+  },
+  "license": "Unlicense",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "file-type": "^11.1.0"
+  }
+}
