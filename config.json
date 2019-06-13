@@ -1,0 +1,6 @@
+{
+	"baseUrl": "https://api.sipgate.com/v2",
+	"username": "YOUR_SIPGATE_EMAIL",
+	"password": "YOUR_SIPGATE_PASSWORD",
+	"faxlineId": "YOUR_SIPGATE_FAXLINE_EXTENSION"
+}
