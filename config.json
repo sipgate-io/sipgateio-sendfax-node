@@ -1,6 +1,6 @@
 {
 	"baseUrl": "https://api.sipgate.com/v2",
-	"username": "YOUR_SIPGATE_EMAIL",
-	"password": "YOUR_SIPGATE_PASSWORD",
+	"tokenId": "YOUR_SIPGATE_TOKEN_ID",
+	"token": "YOUR_SIPGATE_TOKEN",
 	"faxlineId": "YOUR_SIPGATE_FAXLINE_EXTENSION"
 }

@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const config = require('./config');
 
-const { baseUrl, username, password, faxlineId } = config;
+const { baseUrl, tokenId, token, faxlineId } = config;
 
 const readFileAsBase64 = filePath => {
 	const fileContents = fs.readFileSync(filePath);
@@ -30,8 +30,8 @@ const sendFax = async (recipient, filePath) => {
 			'Content-Type': 'application/json',
 		},
 		auth: {
-			username,
-			password,
+			username: tokenId,
+			password: token,
 		},
 		data,
 	};
@@ -55,8 +55,8 @@ const fetchFaxStatus = async sessionId => {
 				'Content-Type': 'application/json',
 			},
 			auth: {
-				username,
-				password,
+				username: tokenId,
+				password: token,
 			},
 		});
 		return {
