@@ -30,6 +30,9 @@ In the [config.json](./config.json) file located in the project root directory i
 ...
 ```
 
+The token should have the `sessions:fax:write` scope.
+For more information about personal access tokens visit our [website.](https://www.sipgate.io/rest-api/authentication#personalAccessToken)
+
 The `faxlineId` uniquely identifies the extension from which you wish to send your Fax. Further explanation is given in the section [Fax Extensions](#fax-extensions).
 
 Run the application:
