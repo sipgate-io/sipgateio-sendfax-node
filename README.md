@@ -200,12 +200,13 @@ The `faxStatusType` can contain the following values:
 
 A Fax extension consists of the letter 'f' followed by a number (e.g. 'f0'). The sipgate API uses the concept of Fax extensions to identify devices within your account that are enabled to send Fax. In this context the term 'device' does not necessarily refer to a hardware Fax but rather a virtual representation.
 
-You can find out what your extension is as follows:
+You can find out what your Fax extension is as follows:
 
-1. Log into your [sipgate account](https://app.sipgate.com/w0/connections)
-2. Use the sidebar to navigate to the **Connections** (_Anschlüsse_) tab
-3. Click **Fax**
-4. The URL of the page should have the form `https://app.sipgate.com/{...}/connections/faxlines/{faxlineId}` where `{faxlineId}` is your Fax extension.
+1. Log into your [sipgate account](https://app.sipgate.com/w0/routing)
+2. Use the sidebar to navigate to the **Routing** (_Telefonie_) tab
+3. Click on any **Fax** device in your routing table
+4. Select any option (gear icon) to open the corresponding menu
+5. The URL of the page should have the form `https://app.sipgate.com/w0/routing/dialog/{option}/{faxlineId}` where `{faxlineId}` is your Fax extension.
 
 ### Common Issues
 
