@@ -2,9 +2,9 @@
 
 # sipgate.io Node.js send fax example
 
-To demonstrate how to send an Fax, we queried the `/sessions/fax` endpoint of the sipgate REST API.
+In this example we demonstrate how to send a fax via the `/sessions/fax` endpoint of the sipgate REST API.
 
-For further information regarding the sipgate REST API please visit https://api.sipgate.com/v2/doc
+For further information on the sipgate REST API please visit our [Website](https://api.sipgate.com/v2/doc).
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ npm install
 
 ## Configuration
 
-In the [config.json](./config.json) file located in the project root directory insert `YOUR_SIPGATE_TOKEN_ID`, `YOUR_SIPGATE_TOKEN`, and `YOUR_SIPGATE_FAXLINE_EXTENSION`:
+The [config.json](./config.json) file located in the project root directory contains several placeholder values `YOUR_SIPGATE_TOKEN_ID`, `YOUR_SIPGATE_TOKEN`, and `YOUR_SIPGATE_FAXLINE_EXTENSION`. Please replace these placeholders with your actual credentials.
 
 ```json
 ...
@@ -30,12 +30,12 @@ In the [config.json](./config.json) file located in the project root directory i
 ...
 ```
 
-The token should have the `sessions:fax:write` scope.
-For more information about personal access tokens visit our [website.](https://www.sipgate.io/rest-api/authentication#personalAccessToken)
+The token must have the `sessions:fax:write` scope.
+For more information on personal access tokens visit our [website.](https://www.sipgate.io/rest-api/authentication#personalAccessToken)
 
-The `faxlineId` uniquely identifies the extension from which you wish to send your Fax. Further explanation is given in the section [Fax Extensions](#fax-extensions).
+The `faxlineId` uniquely identifies the extension (or virtual fax machine) from which you wish to send your fax. Refer to the [Fax Extensions](#fax-extensions) section for more information.
 
-Run the application:
+## Starting the application:
 
 ```bash
 node index.js <RECIPIENT> <PDF_DOCUMENT>
@@ -43,7 +43,7 @@ node index.js <RECIPIENT> <PDF_DOCUMENT>
 
 ## How It Works
 
-In our main script, the index.js, we check that the user provides the recipient phone number and a PDF document as an argument.
+In our main script, index.js, we make sure that the user passes the phone number of a recipient and a PDF document as arguments.
 
 ```javascript
 if (process.argv.length < 4) {
@@ -65,22 +65,22 @@ if (!type || type.mime !== "application/pdf") {
 }
 ```
 
-To check if the provided file is a PDF document we use the `file-type` module to ensure that the mime-type of the file is `application/pdf`.
+To ensure that the file that is passed is a PDF document we use the `file-type` module and verify that the mime-type of the file is `application/pdf`.
 
-After getting the recipient number and filePath from the supplied arguments and checking the file is a PDF document, we call our `sendFax` function located in the [fax.js](./fax.js) and pass the `recipient` and the `filePath` as arguments.
+Now, the `sendFax`,  located in the [fax.js](./fax.js), function is called and the `recipient` and the `filePath` are passed as arguments.
 
 ```javascript
 const sendFaxResponse = await sendFax(recipient, filePath);
 ```
 
-In the `sendFax` function, we first get the filename of the supplied file.
+In the `sendFax` function, we then save the filename of the supplied file to the constant `filename`.
 
 ```javascript
 const filename = path.basename(filePath);
 const base64Content = readFileAsBase64(filePath);
 ```
 
-After that we call our `readFileAsBase64` function which reads the file contents and Base64 encodes it.
+Afterwards we call the `readFileAsBase64` function which reads the file contents and encodes it to Base64.
 
 ```javascript
 const readFileAsBase64 = (filePath) => {
@@ -89,7 +89,7 @@ const readFileAsBase64 = (filePath) => {
 };
 ```
 
-We define the data object which contains the `faxlineId`, `recipient`, `filename`, and `base64Content`.
+Then, we create the data object which contains the `faxlineId`, `recipient`, `filename`, and `base64Content`.
 
 ```javascript
 const data = {
@@ -100,8 +100,8 @@ const data = {
 };
 ```
 
-We use the axios package for request execution. The
-`requestOptions` object contains the parameters `method`, `headers`, `auth`, `baseURL` and `data` (previously referred) which will be used by axios in order to send the desired http post request. The `auth` property takes a username and password and generates an HTTP Basic Auth header (for more information on Basic Auth see our [code example](https://github.com/sipgate/sipgateio-basicauth-node)).
+We use the axios package for requests. 
+The`requestOptions` object contains the parameters `method`, `headers`, `auth`, `baseURL` and `data` (previously referred) which will be used by axios in order to send the desired http post request. The `auth` property takes a username and password and generates an HTTP Basic Auth header (for more information on Basic Auth see our [code example](https://github.com/sipgate/sipgateio-basicauth-node)).
 
 ```javascript
 ...
@@ -131,7 +131,7 @@ try {
 
 The `axios` instance takes the request URL and `requestOptions` as arguments and process the desired http request. The request URL consists of the base URL defined above and the endpoint `/sessions/fax`.
 
-Next we check if status of our `sendFaxResponse` is 200, meaning that the request to send the fax was successfully received.
+Next we verify that the status of our `sendFaxResponse` is 200, which means that the request to send the fax was received successfully.
 **Note:** Although the Api returns the status 200 it does not mean that the fax was sent. It was only added to a queue for sending.
 
 To check the status of the fax we use the `sessionId`, returned by the `sendFax` function, and pass it to the `fetchFaxStatus` function. In this example we use `setInterval` to check the status of the fax every five seconds.
