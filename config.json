@@ -1,6 +1,0 @@
-{
-	"baseUrl": "https://api.sipgate.com/v2",
-	"tokenId": "YOUR_SIPGATE_TOKEN_ID",
-	"token": "YOUR_SIPGATE_TOKEN",
-	"faxlineId": "YOUR_SIPGATE_FAXLINE_EXTENSION"
-}

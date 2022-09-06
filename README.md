@@ -20,15 +20,7 @@ npm install
 
 ## Configuration
 
-In the [config.json](./config.json) file located in the project root directory insert `YOUR_SIPGATE_TOKEN_ID`, `YOUR_SIPGATE_TOKEN`, and `YOUR_SIPGATE_FAXLINE_EXTENSION`:
-
-```json
-...
-"tokenId": "YOUR_SIPGATE_TOKEN_ID",
-"token": "YOUR_SIPGATE_TOKEN",
-"faxlineId": "YOUR_SIPGATE_FAXLINE_EXTENSION",
-...
-```
+Create the .env file by copying the .env.example. Set the values according to the comment above each variable.
 
 The token should have the `sessions:fax:write` scope.
 For more information about personal access tokens visit our [website.](https://www.sipgate.io/rest-api/authentication#personalAccessToken)

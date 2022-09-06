@@ -2,9 +2,12 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
-const config = require('./config');
+require('dotenv').config()
 
-const { baseUrl, tokenId, token, faxlineId } = config;
+const baseUrl = 'https://api.sipgate.com/v2';
+
+const { tokenId, token, faxlineId } = process.env;
+console.log(tokenId, token, faxlineId);
 
 const readFileAsBase64 = filePath => {
 	const fileContents = fs.readFileSync(filePath);
