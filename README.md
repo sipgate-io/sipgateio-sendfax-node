@@ -22,7 +22,7 @@ npm install
 
 Create the .env file by copying the .env.example. Set the values according to the comment above each variable.
 
-The token should have the `sessions:fax:write` scope.
+The token must have the `sessions:fax:write` and `history:read` scopes.
 For more information about personal access tokens visit our [website.](https://www.sipgate.io/rest-api/authentication#personalAccessToken)
 
 The `faxlineId` uniquely identifies the extension from which you wish to send your Fax. Further explanation is given in the section [Fax Extensions](#fax-extensions).
