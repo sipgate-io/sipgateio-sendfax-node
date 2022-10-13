@@ -3,10 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 require('dotenv').config()
-
-const baseUrl = 'https://api.sipgate.com/v2';
-
-const { tokenId, token, faxlineId } = process.env;
+const { BASE_URL, TOKEN_ID, TOKEN, FAXLINE_ID } = process.env;
 
 const readFileAsBase64 = filePath => {
 	const fileContents = fs.readFileSync(filePath);
@@ -18,22 +15,22 @@ const sendFax = async (recipient, filePath) => {
 	const base64Content = readFileAsBase64(filePath);
 
 	const data = {
-		faxlineId,
+		faxlineId: FAXLINE_ID,
 		recipient,
 		filename,
 		base64Content,
 	};
 
 	const requestOptions = {
-		baseURL: baseUrl,
+		baseURL: BASE_URL,
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 		},
 		auth: {
-			username: tokenId,
-			password: token,
+			username: TOKEN_ID,
+			password: TOKEN,
 		},
 		data,
 	};
@@ -50,15 +47,15 @@ const sendFax = async (recipient, filePath) => {
 const fetchFaxStatus = async sessionId => {
 	try {
 		const historyResponse = await axios(`/history/${sessionId}`, {
-			baseURL: baseUrl,
+			baseURL: BASE_URL,
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 			auth: {
-				username: tokenId,
-				password: token,
+				username: TOKEN_ID,
+				password: TOKEN,
 			},
 		});
 		return {

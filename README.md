@@ -25,31 +25,22 @@ Create the .env file by copying the .env.example. Set the values according to th
 The token must have the `sessions:fax:write` and `history:read` scopes.
 For more information about personal access tokens visit our [website.](https://www.sipgate.io/rest-api/authentication#personalAccessToken)
 
-The `faxlineId` uniquely identifies the extension from which you wish to send your Fax. Further explanation is given in the section [Fax Extensions](#fax-extensions).
+The `FAXLINE_ID` uniquely identifies the extension from which you wish to send your fax. Further explanation is given in the section [Fax Extensions](#fax-extensions).
+
+Although the API accepts various formats of fax numbers, the recommended format for the `RECIPIENT` is the [E.164 standard](https://en.wikipedia.org/wiki/E.164).
+
+`PDF_FILE_PATH` expects an either relative or absolute file path to your desired PDF file to be sent.
 
 Run the application:
 
 ```bash
-node index.js <RECIPIENT> <PDF_DOCUMENT>
+node index.js
 ```
 
 ## How It Works
 
-In our main script, the index.js, we check that the user provides the recipient phone number and a PDF document as an argument.
-
 ```javascript
-if (process.argv.length < 4) {
-  console.error(
-    "Please pass the recipient number and the path to the PDF as arguments!"
-  );
-  console.log("node index.js RECIPIENT_NUMBER PDF_DOCUMENT");
-  process.exit(1);
-}
-
-const recipientNumber = process.argv[2];
-const filePath = process.argv[3];
-
-const type = fileType(fs.readFileSync(filePath));
+const type = fileType(fs.readFileSync(PDF_FILE_PATH));
 
 if (!type || type.mime !== "application/pdf") {
   console.error("The file must be a PDF");
@@ -62,14 +53,14 @@ To check if the provided file is a PDF document we use the `file-type` module to
 After getting the recipient number and filePath from the supplied arguments and checking the file is a PDF document, we call our `sendFax` function located in the [fax.js](./fax.js) and pass the `recipient` and the `filePath` as arguments.
 
 ```javascript
-const sendFaxResponse = await sendFax(recipient, filePath);
+const sendFaxResponse = await sendFax(RECIPIENT, PDF_FILE_PATH);
 ```
 
 In the `sendFax` function, we first get the filename of the supplied file.
 
 ```javascript
-const filename = path.basename(filePath);
-const base64Content = readFileAsBase64(filePath);
+const filename = path.basename(PDF_FILE_PATH);
+const base64Content = readFileAsBase64(PDF_FILE_PATH);
 ```
 
 After that we call our `readFileAsBase64` function which reads the file contents and Base64 encodes it.
@@ -85,7 +76,7 @@ We define the data object which contains the `faxlineId`, `recipient`, `filename
 
 ```javascript
 const data = {
-  faxlineId,
+  faxlineId: FAXLINE_ID,
   recipient,
   filename,
   base64Content,
@@ -98,15 +89,15 @@ We use the axios package for request execution. The
 ```javascript
 ...
 const requestOptions = {
-	baseURL: baseUrl,
+	baseURL: BASE_URL,
 	method: 'POST',
 	headers: {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
 	},
 	auth: {
-		username: tokenId,
-		password: token,
+		username: TOKEN_ID,
+		password: TOKEN,
 	},
 	data,
 };
@@ -159,15 +150,15 @@ In the `fetchFaxStatus` function we use axios again to query the `/history/{sess
 const fetchFaxStatus = async (sessionId) => {
   try {
     const historyResponse = await axios(`/history/${sessionId}`, {
-      baseURL: baseUrl,
+      baseURL: BASE_URL,
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       auth: {
-        username: tokenId,
-        password: token,
+        username: TOKEN_ID,
+        password: TOKEN,
       },
     });
     return {

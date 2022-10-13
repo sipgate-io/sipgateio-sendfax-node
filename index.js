@@ -3,17 +3,11 @@ const fs = require('fs');
 
 const { sendFax, fetchFaxStatus } = require('./fax');
 
+require('dotenv').config()
+const { RECIPIENT, PDF_FILE_PATH } = process.env;
+
 (async () => {
-	if (process.argv.length < 4) {
-		console.error('Please pass the recipient number and the path to the PDF as arguments!');
-		console.log('node index.js RECIPIENT_NUMBER PDF_DOCUMENT');
-		process.exit(1);
-	}
-
-	const recipientNumber = process.argv[2];
-	const filePath = process.argv[3];
-
-	const type = fileType(fs.readFileSync(filePath));
+	const type = fileType(fs.readFileSync(PDF_FILE_PATH));
 
 	if (!type || type.mime !== 'application/pdf') {
 		console.error('The file must be a PDF');
@@ -21,7 +15,7 @@ const { sendFax, fetchFaxStatus } = require('./fax');
 	}
 
 	console.log('Add fax to the sending queue...');
-	const sendFaxResponse = await sendFax(recipientNumber, filePath);
+	const sendFaxResponse = await sendFax(RECIPIENT, PDF_FILE_PATH);
 
 	if (sendFaxResponse && sendFaxResponse.status === 200) {
 		console.log('Fax added to the sending queue.');
