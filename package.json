@@ -14,7 +14,7 @@
   },
   "license": "Unlicense",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "dotenv": "^16.0.2",
     "file-type": "^11.1.0"
   }
